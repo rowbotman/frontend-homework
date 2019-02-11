@@ -14,18 +14,22 @@ QUnit.module('Тестируем функцию solve', function () {
 		assert.throws(
 			function() { solve(11, 11); },
 			new CustomError("The expression should be a string"),
+			"Вместо строки-выражения передали число"
 		);
 		assert.throws(
 			function() { solve("x * x"); },
 			new CustomError("The value should be initialize"),
+			"Не передан x"
 		);
 		assert.throws(
 			function() { solve("xx * 10 -1", 10); },
 			new CustomError("Incorrect symbols in expression"),
+			"Лишние символы в выражении"
 		);
 		assert.throws(
 			function() { solve("(x * x", 10); },
-			new SyntaxError("Unexpected token ;")
+			new SyntaxError("Unexpected token ;"),
+			"Ошибки при использовании операторов"
 		);
 
 	});
