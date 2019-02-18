@@ -13,7 +13,7 @@ QUnit.module('Тестируем функцию solve', function () {
 	QUnit.test('solve корректно обрабатывает ошибки ', function (assert) {
 		assert.strictEqual(
 			solve(11, 11),
-			null, 
+			null,
 			"Вместо строки-выражения передали число");
 		assert.strictEqual(
 			solve("x * x"),
@@ -24,7 +24,7 @@ QUnit.module('Тестируем функцию solve', function () {
 		 	null,
 		 	"Лишние символы в выражении");
 		assert.strictEqual(
-			solve("(x * x", 10), 
+			solve("(x * x", 10),
 			null,
 			"Ошибки при использовании операторов");
 	});
