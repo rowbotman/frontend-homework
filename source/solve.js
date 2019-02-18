@@ -1,20 +1,6 @@
 'use strict';
 
 /**
- * the function save the custom exception
- * @param {string} message - the description of the error
- */
-
-function CustomError(message) { this.message = message; }
-
-/**
- * the function get the description of the error
- * @returns {string} this.message - the description of the error
- */
-
-CustomError.prototype.toString = function() { return this.message; };
-
-/**
  * the function solves the math expression with x variable
  * @param {string} expr - the math expression
  * @param {integer} _x - the value of the x variable in expression
@@ -22,23 +8,24 @@ CustomError.prototype.toString = function() { return this.message; };
  */
 
 const solve = (expr, _x) => {
-	if (typeof(expr) !== "string") {
-		throw new CustomError("The expression should be a string");
-	}
-	let x = +_x;
-	if (Number.isNaN(x)) {
-		throw new CustomError("The value should be initialize");
+	if (typeof(expr) !== "string") { return null; }
+
+	const x = +_x;
+	if (Number.isNaN(x)) { return null; }
+
+	const lowerExpr = expr.toLowerCase();
+	if (!lowerExpr.match(/^[x\d/\*\+\-( )]*$/)
+		|| lowerExpr.match(/(xx+)|(\*\*+)|(\-\-+)|(\+\++)/)) {
+		return null;
 	}
 
-	expr = expr.toLowerCase();
+	let result = 0;
+	try {
+		result = Function('x', 'return (' + lowerExpr + ');')(x);	
+	} catch (e) {
+		return null;
+	}
+	if (Number.isNaN(result)) { return null; }
 
-	if (!expr.match(/^[x\d/\*\+\-( )]*$/)
-		|| expr.match(/(xx+)|(\*\*+)|(\-\-+)|(\+\++)/)) {
-		throw new CustomError("Incorrect symbols in expression")
-	}
-	let result = Function('x', 'return (' + expr + ');')(x);
-	if (Number.isNaN(result)) {
-		throw new CustomError("Expression is incorrect");
-	}
 	return result;
 }
