@@ -12,20 +12,20 @@ QUnit.module('Тестируем функцию solve', function () {
 
 	QUnit.test('solve корректно обрабатывает ошибки ', function (assert) {
 		assert.strictEqual(
-			solve(11, 11),
-			null,
+			isNaN(solve(11, 11)),
+			true,
 			"Вместо строки-выражения передали число");
 		assert.strictEqual(
-			solve("x * x"),
-			null,
+			isNaN(solve("x * x")),
+			true,
 			"Не передан x");
 		assert.strictEqual(
-			solve("xx * 10 -1", 10),
-		 	null,
+			isNaN(solve("xx * 10 -1", 10)),
+		 	true,
 		 	"Лишние символы в выражении");
 		assert.strictEqual(
-			solve("(x * x", 10),
-			null,
+			isNaN(solve("(x * x", 10)),
+			true,
 			"Ошибки при использовании операторов");
 	});
 });

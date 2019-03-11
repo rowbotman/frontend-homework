@@ -1,31 +1,38 @@
 'use strict';
 
 /**
+ * the function get type of object
+ * @param obj
+ * @returns {string}
+ */
+const toType = obj =>
+		({}).toString.call(obj).match(/\s([a-zA-Z]+)/)[1].toLowerCase();
+
+/**
  * the function solves the math expression with x variable
  * @param {string} expr - the math expression
  * @param {integer} _x - the value of the x variable in expression
- * @returns {integer} - the calculated value of math expression
+ * @returns {number} - the calculated value of math expression
  */
-
 const solve = (expr, _x) => {
-	if (typeof(expr) !== "string") { return null; }
+	if (toType(expr) !== 'string') { return NaN; }
 
 	const x = +_x;
-	if (Number.isNaN(x)) { return null; }
+	if (Number.isNaN(x)) { return NaN; }
 
 	const lowerExpr = expr.toLowerCase();
-	if (!lowerExpr.match(/^[x\d/\*\+\-( )]*$/)
-		|| lowerExpr.match(/(xx+)|(\*\*+)|(\-\-+)|(\+\++)/)) {
-		return null;
-	}
+	const symPattern = new RegExp(/^[x\d/\*\+\-()' '\t]*$/);
+	const syntaxPattern = new RegExp(/(x{2})|(\*{2})|(\-{2})|(\+{2})/);
+	if (symPattern.test(lowerExpr)
+		&& !syntaxPattern.test(lowerExpr)) {
+		try {
+			let result = Function('x', `return (${lowerExpr});`)(x);
+			if (Number.isNaN(result)) { return NaN; }
 
-	let result = 0;
-	try {
-		result = Function('x', 'return (' + lowerExpr + ');')(x);	
-	} catch (e) {
-		return null;
+			return result;
+		} catch (e) {
+			return NaN;
+		}
 	}
-	if (Number.isNaN(result)) { return null; }
-
-	return result;
-}
+	return NaN;
+};
