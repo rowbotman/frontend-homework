@@ -37,15 +37,15 @@ const toType = obj =>
 /**
  * the function solves the math expression with x variable
  * @param {string} expr - the math expression
- * @param {integer} _x - the value of the x variable in expression
+ * @param {integer} userX - the value of the x variable in expression
  * @returns {SolveResult} - the calculated value of math expression with error message (if no errors it is NaN)
  */
-const solve = (expr, _x) => {
+const solve = (expr, userX) => {
 	if (toType(expr) !== 'string') {
 		return new SolveResult(NaN, "the expression should have a string type")
 	}
 
-	const x = +_x;
+	const x = +userX;
 	if (Number.isNaN(x)) {
 		return new SolveResult(NaN, "the second argument should be a number");
 	}
